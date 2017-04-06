@@ -1,0 +1,15 @@
+<h2>Example 5 - Russian Doll Caching (nested caches) - <%= Time.now %></h2>
+
+<p>Russian Doll Caching is only describing a cached value within another cached value</p>
+
+<p>In this example we have a nested cache, but the inner cache is effectively redundant right now. The higher level cache will contain everything within it.</p>
+
+<p>The nested cache content is set, but never retreived.</p>
+
+<% cache do %>
+<p>This is expensive to render <%= Time.now %>
+  <% cache do %>
+  <strong>Nested Within, there was another expensive render <%= Time.now %></strong>
+  <% end %>
+</p>
+<% end %>
