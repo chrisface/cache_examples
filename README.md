@@ -1,24 +1,12 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 1 - No Caching
 
-Things you may want to cover:
+## 2 - Action Caching
 
-* Ruby version
+## 3 - Action Caching (without layout)
 
-* System dependencies
+## 4 - Fragment Caching
 
-* Configuration
+## 5 - Russian Doll Caching (nested caches)
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 6 - Cache Invalidation (busting)
