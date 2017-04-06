@@ -22,4 +22,8 @@ class ExampleController < ApplicationController
     render :example_5
   end
 
+  def example_6
+    render :example_6
+  end
+
 end

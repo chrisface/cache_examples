@@ -1,0 +1,70 @@
+<h2>Example 5 - Cache Invalidation (busting) - <%= Time.now %></h2>
+
+<p>All of our uses of the cache so far have been quite simple. This is because none of them were ever being invalidated. Restarting the server was the only way to do this.</p>
+
+<p>There are two main ways to invalidate a cache and cause a re-render to be triggered</p>
+
+<ul>
+  <li>Cache Keys</li>
+  <li>Cache Value Expiry Time</li>
+</ul>
+
+<p>The configuration of action cache and fragment caches are identical for these two options</p>
+
+<h3>Cache Key - static</h3>
+Key: <%= cache_key = "static_cache_key" %>
+<% cache(cache_key) do %>
+  <p>
+    This is expensive to render, and my cache key is always the same <%= Time.now %>
+  </p>
+<% end %>
+
+<h3>Cache Key - Dynamic</h3>
+Key: <%= cache_key = "cache_key_#{Time.now}" %>
+<% cache(cache_key) do %>
+  <p>
+    This is expensive to render, and my cache key is always different <%= Time.now %>
+  </p>
+<% end %>
+
+
+<h3>Expiry</h3>
+<% expiry_time = 10.seconds %>
+
+<% cache("a_cache_key_or_object_1", expires_in: expiry_time) do %>
+  <p>
+    This is expensive to render and expires every <%= expiry_time %> seconds <%= Time.now %>
+  </p>
+<% end %>
+
+<h3>Expiry - Nested caches</h3>
+<% short_expiry_time = 10.seconds %>
+<% long_expiry_time = 20.seconds %>
+
+<% cache("a_cache_key_or_object_2", expires_in: short_expiry_time) do %>
+  <p>
+    My expiry is every <%= short_expiry_time %> seconds <%= Time.now %>
+    123<% cache("a_cache_key_or_object_3", expires_in: long_expiry_time) do %>
+      <p>
+        My expiry is every <%= long_expiry_time %> seconds <%= Time.now %>
+      </p>
+    <% end %>
+  </p>
+<% end %>
+
+<h3>Expiry - Nested caches expiry problem</h3>
+<% short_expiry_time = 10.seconds %>
+<% long_expiry_time = 20.seconds %>
+
+<% cache("a_cache_key_or_object_4", expires_in: long_expiry_time) do %>
+  <p>
+    My expiry is every <%= long_expiry_time %> seconds <%= Time.now %>
+    123<% cache("a_cache_key_or_object_5", expires_in: short_expiry_time) do %>
+      <p>
+        My expiry is every <%= short_expiry_time %> seconds <%= Time.now %>
+      </p>
+    <% end %>
+  </p>
+<% end %>
+
+<p>In this last example we can see there is a problem when a nested cache value is invalidated but the parent cache value is not. This problem applies to every layer of caching<p>
