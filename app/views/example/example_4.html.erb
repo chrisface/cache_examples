@@ -1,0 +1,9 @@
+<h2>Example 4 - Fragment Caching - <%= Time.now %></h2>
+
+<p>Fragment caching lets you cache a specific section of an ERB file</p>
+
+<p>If you know something is going to be expensive to render, but not change often then it can be cached</p>
+
+<% cache do %>
+<p>This is expensive to render <%= Time.now %></p>
+<% end %>
