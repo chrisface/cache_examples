@@ -1,0 +1,14 @@
+<h2>Example 2</h2>
+
+<p>This page has action caching turned on.</p>
+
+<p>
+  The development.rb file has nowconfigured
+  <ul>
+    <li>"config.action_controller.perform_caching = true"</li>
+    <li>"config.cache_store = :memory_store"</li>
+  </ul>
+  This allows controller action caching and sets the the cache to be a memory store within the Rails application. This cache is lost any time we stop the Rails application.
+</p>
+
+</p> Examine the time taken to render this page on the first load vs the second load. There should be a big difference </p>
